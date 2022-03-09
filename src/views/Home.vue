@@ -1,18 +1,47 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <section>
+        <h1>Welcome {{first_name}}!</h1>
+
+        <!-- custom movie component goes here - show the current selection -->
+
+
+        <!-- show the list of movies retrieved -->
+        
+    </section>
+    
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
-  }
+    name: "TheHomeView",
+
+    props: {
+        first_name: String,
+        role: String,
+        permissions: String,
+        avatar: String
+    }, 
+
+    created() {
+        fetch('/movies')
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+
+                // store the movies in Vue instance              
+                this.movies = data[0];
+
+                // pick a random movie 
+                this.currentMovie = data[0][Math.floor(Math.random() * data[0].length)];
+            })
+        .catch(err => console.err(err));
+    },
+
+    data() {
+        return {
+            movies: [],
+            currentMovie: {}
+        }
+    }
 }
 </script>
