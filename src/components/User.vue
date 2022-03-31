@@ -3,6 +3,7 @@
         <div class="card-body text-center" @click="navToHome">
             <img class="rounded-circle img-fluid" :src="require('@/assets/images/' + user.avatar)" alt="avatar">
             <h2>{{ user.first_name }}</h2>
+            <i class="fa-solid fa-pen-to-square edit-user"></i>
         </div>        
     </article>
 </template>
@@ -22,3 +23,6 @@ export default {
     },
 }
 </script>
+<style lang="scss">
+    @import "@/assets/sass/user.scss";
+</style>

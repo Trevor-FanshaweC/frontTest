@@ -19,7 +19,14 @@ import User from "@/components/User.vue"
 export default {
     name: 'TheUsersView',
 
+    props: {
+        loggedin: Boolean,
+        role: Number
+    },
+
     created() {
+        console.log('auth:', this.loggedin);
+
         fetch('/users/getall')
             .then(res => res.json())
             .then(data => {
