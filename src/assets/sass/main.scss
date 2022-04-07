@@ -20,4 +20,21 @@ body {
         position: relative;
         top: -2px;
     }
+
+    nav {
+        ul {
+            display: flex;
+            font-size: 1.4em;
+            padding-top: 0.8em;
+
+            li { 
+                margin-right: 0.35em; 
+                cursor: pointer;
+
+                :hover {
+                    color: rgb(117, 194, 117);
+                }
+            }
+        }
+    }
 }

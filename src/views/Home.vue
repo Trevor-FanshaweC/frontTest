@@ -1,25 +1,51 @@
 <template>
     <section>
-        <h1>Welcome {{first_name}}!</h1>
+        <!-- <h1>Welcome {{first_name}}!</h1> -->
 
-        <!-- custom movie component goes here - show the current selection -->
+        <!-- custom movie components go here in a grid container - show the current selection -->
+        <section class="movie-container">
+            <!-- custom movie article component for the text data -->
+            <MovieData
+                :movies_title="currentMovie.movies_title"
+                :movies_storyline="currentMovie.movies_storyline"
+                :movies_runtime="currentMovie.movies_runtime"
+                :movies_year="currentMovie.movies_year"
+            ></MovieData>
 
+            <!-- movie player component -->
+            <MoviePlayer
+                @loadnew="reloadPlayer"
+                :movies_trailer="currentMovie.movies_trailer"
+            ></MoviePlayer>
+        </section>
 
-        <!-- show the list of movies retrieved -->
-        
-    </section>
-    
+        <!-- show the list of movies retrieved - in a grid -->
+        <!-- TODO - could show these in a filtered row by genre -->
+        <section class="movie-thumbs">
+            <MovieThumb
+                v-for="movie in movies"
+                :key="movie.movies_id"
+                :thumb="movie.movies_cover"
+                @click="setCurrentMovie(movie)"
+            ></MovieThumb>
+        </section>        
+    </section>    
 </template>
 
 <script>
+import MovieData from "@/components/MovieData.vue";
+import MoviePlayer from "@/components/MoviePlayer.vue";
+import MovieThumb from "@/components/MovieThumb.vue";
+
 export default {
     name: "TheHomeView",
 
     props: {
         first_name: String,
-        role: String,
-        permissions: String,
-        avatar: String
+        role: Number,
+        permissions: Number,
+        avatar: String,
+        loggedin: Boolean
     }, 
 
     created() {
@@ -40,8 +66,28 @@ export default {
     data() {
         return {
             movies: [],
-            currentMovie: {}
+            currentMovie: {},
         }
+    },
+
+    methods: {
+        setCurrentMovie(movie) {
+            this.currentMovie = movie;
+        },
+
+        reloadPlayer() {
+            this.setCurrentMovie(this.movies[Math.floor(Math.random() * this.movies.length - 1)]);
+        }
+    },
+
+    components: {
+        MovieData,
+        MoviePlayer,
+        MovieThumb
     }
 }
 </script>
+
+<style lang="scss">
+    @import "@/assets/sass/homepage.scss";
+</style>
